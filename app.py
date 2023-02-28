@@ -11,7 +11,7 @@ class BJ:
         self.count = 0
         self.koloda = [6, 7, 8, 9, 10, 2, 3, 4, 11] * 4
         self.current = ''
-        self.cards = {6 : '<font size="100px">🂶</font>', 7 : '<font size="100px">🃇</font>', 8 : '<font size="100px">🃘</font>', 9 : '<font size="100px">🂩</font>', 10 : '<font size="100px">🃊</font>', 2 : '<font size="100px">🂻</font>', 3 : '<font size="100px">🂭</font>', 4 :'<font size="100px">🃞</font>', 11 :'<font size="100px">🃁</font>'}
+        self.cards = {6 : '🂶 ', 7 : '🃇 ', 8 : '🃘 ', 9 : '🂩 ', 10 : '🃊 ', 2 : '🂻 ', 3 : '🂭 ', 4 :'🃞 ', 11 :'🃁 '}
 
     def start(self):
         self.count = 0
@@ -23,8 +23,9 @@ class BJ:
         s = self.cards[self.current]
         self.to_print = []
         self.to_print.append(s)
-        s = ''.join(self.to_print)
-        return s
+        self.text = ''.join(self.to_print)
+        self.start_message = 'У вас %d \n' % self.count
+        return
 
     def take_a_card(self):
         while self.count < 21:
@@ -32,16 +33,19 @@ class BJ:
             self.count += self.current
             ss = self.cards[self.current]
             self.to_print.append(ss)
-            ss = ''.join(self.to_print)
-            return ss
+            self.text = ''.join(self.to_print)
+            return
 
     def winner(self):
         if self.count > 21:
-            return('<br>У вас %d очков.' % self.count + '<br>Извините, но вы проиграли' + '<form method="post" action="/game1" ><input type="submit" value="Again" name="action6" /></form>' + '<form method="post" action="/game1" ><input type="submit" value="Return" name="action3" /></form>')
+            self.message = 'У вас %d \n' % self.count + 'Извините, но вы проиграли \n'
+            return self.message
         elif self.count == 21:
-            return('<br>У вас 21 очко!.' + '<br>Поздравляю, вы набрали 21!' + '<form method="post" action="/game1" ><input type="submit" value="Again" name="action6" /></form>' + '<form method="post" action="/game1" ><input type="submit" value="Return" name="action3" /></form>')
+            self.message = 'У вас 21 ! \n' + 'Поздравляю, вы победили! \n'
+            return self.message
         else:
-            return('<br>У вас %d очков.' % self.count + '<form method="post" action="/game1" ><input type="submit" value="Take a card" name="action2" /></form>' + '<form method="post" action="/game1" ><input type="submit" value="Stop" name="action4" /></form>')
+            self.message = 'У вас %d \n' % self.count
+            return self.message
 
 
 class Slots:
@@ -74,10 +78,14 @@ def game1():
     if request.method == 'POST':
         if request.form.get('action1') == 'Start':
             my_game.start()
-            return my_game.start() + '<form method="post" action="/game1" ><input type="submit" value="Take a card" name="action2" /></form>'
+            return render_template('blackjack.html', data = my_game.text, message = my_game.start_message)
         elif request.form.get('action2') == 'Take a card':
-            my_game.winner()
-            return my_game.take_a_card() + str(my_game.winner())
+            if my_game.count >= 21:
+                return render_template('blackjack.html', data = my_game.text, message = 'Больше взять нельзя')
+            else:
+                my_game.take_a_card()
+                my_game.winner()
+                return render_template('blackjack.html', data =my_game.text, message = my_game.message)
         elif request.form.get('action3') == 'Return':
             return redirect('/game1')
         elif request.form.get('action4') == 'Stop':
@@ -86,7 +94,7 @@ def game1():
             return redirect('/')
         elif request.form.get('action6') == 'Again':
             my_game.start()
-            return my_game.start() + '<form method="post" action="/game1" ><input type="submit" value="Take a card" name="action2" /></form>'
+            return render_template('blackjack.html', data = my_game.text, message = my_game.start_message)
 
 
     elif request.method == 'GET':
