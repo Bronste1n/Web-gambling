@@ -93,9 +93,9 @@ def game1():
         return render_template('game1.html')
 
 
-@app.route('/slots')
+@app.route('/hello')
 def hello_casino():
-    return render_template('slots.html', hello = str(0) + '|' + str(0) + '|' + str(0))
+    return render_template('hello.html', hello = '0 | 0 | 0')
 
 
 @app.route('/game2')
