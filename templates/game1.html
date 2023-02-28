@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}
+Блэкджек
+{% endblock %}
+
+
+{% block body %}
+<h3>Начать игру?<h3/>
+    <form method="post" action="/game1">
+        <input type="submit" value="Start" name="action1"/>
+        <input type="submit" value="Quit" name="action5"/>
+    </form>
+{% endblock %}
