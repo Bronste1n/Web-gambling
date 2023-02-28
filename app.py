@@ -44,6 +44,23 @@ class BJ:
             return('<br>У вас %d очков.' % self.count + '<form method="post" action="/game1" ><input type="submit" value="Take a card" name="action2" /></form>' + '<form method="post" action="/game1" ><input type="submit" value="Stop" name="action4" /></form>')
 
 
+class Slots:
+
+    def __init__(self):
+        self.rand1 = 0
+        self.rand2 = 0
+        self.rand3 = 0
+
+    def randomize(self):
+        self.rand1 = random.randint(0, 6)
+        self.rand2 = random.randint(0, 6)
+        self.rand3 = random.randint(0, 6)
+
+        if self.rand1 == self.rand2 == self.rand3:
+            return str(self.rand1) + ' | ' + str(self.rand2) + ' | ' + str(self.rand3) + ' --> ' + ' WIN!'
+        else:
+            return str(self.rand1) + ' | ' + str(self.rand2) + ' | ' + str(self.rand3) + ' --> ' + ' LOSE'
+        
 
 my_game = BJ()
 
@@ -76,5 +93,18 @@ def game1():
         return render_template('game1.html')
 
 
+@app.route('/slots')
+def hello_casino():
+    return render_template('slots.html', hello = str(0) + '|' + str(0) + '|' + str(0))
+
+
+@app.route('/game2')
+def game2():
+    slot = Slots()
+    s = slot.randomize()
+    return render_template('game2.html', data = str(s))    
+    
+    
+    
 if __name__ == '__main__':
     app.run(debug=True)
