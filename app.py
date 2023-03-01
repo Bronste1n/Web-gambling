@@ -61,9 +61,9 @@ class Slots:
         self.rand3 = random.randint(0, 6)
 
         if self.rand1 == self.rand2 == self.rand3:
-            return str(self.rand1) + ' | ' + str(self.rand2) + ' | ' + str(self.rand3) + ' --> ' + ' WIN!'
+            return str(self.rand1) + ' | ' + str(self.rand2) + ' | ' + str(self.rand3) + ' → ' + ' WIN!'
         else:
-            return str(self.rand1) + ' | ' + str(self.rand2) + ' | ' + str(self.rand3) + ' --> ' + ' LOSE'
+            return str(self.rand1) + ' | ' + str(self.rand2) + ' | ' + str(self.rand3) + ' → ' + ' LOSE'
         
 
 my_game = BJ()
