@@ -54,16 +54,17 @@ class Slots:
         self.rand1 = 0
         self.rand2 = 0
         self.rand3 = 0
+        self.dict{0 : '❄︎', 1 : '☭︎', 2 : '☻︎', 3 : '♛︎', 4 : '☘︎', 5 : '❤︎', 6 : '☠︎'}
 
     def randomize(self):
-        self.rand1 = random.randint(0, 6)
-        self.rand2 = random.randint(0, 6)
-        self.rand3 = random.randint(0, 6)
+        self.rand1 = self.dict[random.randint(0, 6)]
+        self.rand2 = self.dict[random.randint(0, 6)]
+        self.rand3 = self.dict[random.randint(0, 6)]
 
         if self.rand1 == self.rand2 == self.rand3:
-            return str(self.rand1) + ' | ' + str(self.rand2) + ' | ' + str(self.rand3) + ' → ' + ' WIN!'
+            return self.rand1 + ' | ' + self.rand2 + ' | ' + self.rand3 + ' → ' + ' WIN!'
         else:
-            return str(self.rand1) + ' | ' + str(self.rand2) + ' | ' + str(self.rand3) + ' → ' + ' LOSE'
+            return self.rand1 + ' | ' + self.rand2 + ' | ' + self.rand3 + ' → ' + ' LOSE'
         
 
 my_game = BJ()
@@ -103,7 +104,7 @@ def game1():
 
 @app.route('/hello')
 def hello_casino():
-    return render_template('hello.html', hello = '0 | 0 | 0')
+    return render_template('hello.html', hello = '❤︎ | ❤︎ | ❤︎')
 
 
 @app.route('/game2')
