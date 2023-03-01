@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}
+Блэкджек
+{% endblock %}
+
+
+{% block body %}
+<p style="color: gold; font-size: 100px">{{ data }}</p>
+<p style="color: gold; font-size: 100px">{{ message }}</p>
+
+<form method="post" action="/game1">
+    <input type="submit" value="Take a card" name="action2"/>
+    <input type="submit" value="Again" name="action6"/>
+    <input type="submit" value="Return" name="action3"/>
+</form>
+{% endblock %}
